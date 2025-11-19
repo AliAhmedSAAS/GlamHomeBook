@@ -45,7 +45,12 @@ export default defineConfig(async () => {
       outDir: path.resolve(projectRoot, "dist/public"),
       emptyOutDir: true,
       rollupOptions: {
-        input: path.resolve(projectRoot, "index.html"),
+        input: {
+          main: path.resolve(projectRoot, "index.html"),
+        },
+        output: {
+          entryFileNames: "assets/[name]-[hash].js",
+        },
       },
     },
     server: {
