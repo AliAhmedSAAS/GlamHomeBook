@@ -27,16 +27,17 @@ async function getReplitPlugins() {
 export default defineConfig(async () => {
   const replitPlugins = await getReplitPlugins();
   const projectRoot = import.meta.dirname;
+  const clientRoot = path.resolve(projectRoot, "client");
   
   return {
-    root: projectRoot,
+    root: clientRoot,
     plugins: [
       react(),
       ...replitPlugins,
     ],
     resolve: {
       alias: {
-        "@": path.resolve(projectRoot, "client", "src"),
+        "@": path.resolve(clientRoot, "src"),
         "@shared": path.resolve(projectRoot, "shared"),
         "@assets": path.resolve(projectRoot, "attached_assets"),
       },
@@ -53,6 +54,7 @@ export default defineConfig(async () => {
         },
       },
     },
+    publicDir: path.resolve(projectRoot, "client", "public"),
     server: {
       fs: {
         strict: true,
