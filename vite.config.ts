@@ -26,24 +26,26 @@ async function getReplitPlugins() {
 
 export default defineConfig(async () => {
   const replitPlugins = await getReplitPlugins();
+  const projectRoot = import.meta.dirname;
   
   return {
+    root: projectRoot,
     plugins: [
       react(),
       ...replitPlugins,
     ],
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+        "@": path.resolve(projectRoot, "client", "src"),
+        "@shared": path.resolve(projectRoot, "shared"),
+        "@assets": path.resolve(projectRoot, "attached_assets"),
       },
     },
     build: {
-      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      outDir: path.resolve(projectRoot, "dist/public"),
       emptyOutDir: true,
       rollupOptions: {
-        input: path.resolve(import.meta.dirname, "index.html"),
+        input: path.resolve(projectRoot, "index.html"),
       },
     },
     server: {
