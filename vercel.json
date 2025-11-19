@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run vercel-build",
+  "buildCommand": "npm run build",
   "installCommand": "npm install",
   "outputDirectory": "dist/public",
   "rewrites": [
@@ -11,7 +11,6 @@
   ],
   "functions": {
     "api/**/*.ts": {
-      "runtime": "@vercel/node",
       "memory": 1024,
       "maxDuration": 10
     }
