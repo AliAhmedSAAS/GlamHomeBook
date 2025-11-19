@@ -29,6 +29,7 @@ export default defineConfig(async () => {
   
   // Use process.cwd() for Vercel compatibility - it should be the project root
   const projectRoot = process.cwd();
+  const clientRoot = path.resolve(projectRoot, "client");
   
   return {
     plugins: [
@@ -37,15 +38,18 @@ export default defineConfig(async () => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(projectRoot, "client", "src"),
+        "@": path.resolve(clientRoot, "src"),
         "@shared": path.resolve(projectRoot, "shared"),
         "@assets": path.resolve(projectRoot, "attached_assets"),
       },
     },
-    root: path.resolve(projectRoot, "client"),
+    root: clientRoot,
     build: {
       outDir: path.resolve(projectRoot, "dist/public"),
       emptyOutDir: true,
+      rollupOptions: {
+        input: path.resolve(clientRoot, "index.html"),
+      },
     },
     server: {
       fs: {
