@@ -27,10 +27,6 @@ async function getReplitPlugins() {
 export default defineConfig(async () => {
   const replitPlugins = await getReplitPlugins();
   
-  // Use process.cwd() for Vercel compatibility - it should be the project root
-  const projectRoot = process.cwd();
-  const clientRoot = path.resolve(projectRoot, "client");
-  
   return {
     plugins: [
       react(),
@@ -38,18 +34,14 @@ export default defineConfig(async () => {
     ],
     resolve: {
       alias: {
-        "@": path.resolve(clientRoot, "src"),
-        "@shared": path.resolve(projectRoot, "shared"),
-        "@assets": path.resolve(projectRoot, "attached_assets"),
+        "@": path.resolve(import.meta.dirname, "client", "src"),
+        "@shared": path.resolve(import.meta.dirname, "shared"),
+        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
       },
     },
-    root: clientRoot,
     build: {
-      outDir: path.resolve(projectRoot, "dist/public"),
+      outDir: path.resolve(import.meta.dirname, "dist/public"),
       emptyOutDir: true,
-      rollupOptions: {
-        input: path.resolve(clientRoot, "index.html"),
-      },
     },
     server: {
       fs: {
